@@ -1,0 +1,22 @@
+{
+  "name": "Mac",
+  "version": "0.1.0",
+  "summary": "A short description of Mac.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Levi Bostian/Mac",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Levi Bostian": "levi@curiosityio.com"
+  },
+  "source": {
+    "git": "https://github.com/Levi Bostian/Mac.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "Mac/Classes/**/*"
+}
