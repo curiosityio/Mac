@@ -43,5 +43,5 @@ iOS framework to build offline-first mobile apps. Create the models then have Ma
   s.dependency 'RealmSwift', '~> 2.5.0'
   s.dependency 'ObjectMapper', '~> 2.2.5'
   s.dependency 'Alamofire', '~> 4.4.0'
-  s.dependency 'iOSBoilerplate', '~> 0.1.1'
+  s.dependency 'iOSBoilerplate', '~> 0.2.1'
 end

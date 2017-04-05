@@ -20,8 +20,14 @@ class LogUtil {
         NSLog(logMessage)
     }
     
-    class func logArgs(_ message: String, args: CVarArg...) {
-        NSLog(message, args)
+    class func logArgs(_ message: String?, args: CVarArg...) {
+        var logMessage = "Log message is nil......."
+        
+        if let message = message {
+            logMessage = message
+        }
+        
+        NSLog(logMessage, args)
     }
     
 }

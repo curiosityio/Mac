@@ -2,13 +2,13 @@
 //  NSObjectExtensions.swift
 //  Pods
 //
-//  Created by Levi Bostian on 4/3/17.
+//  Created by Levi Bostian on 4/4/17.
 //
 //
 
 import Foundation
 
-extension NSObject {
+public extension NSObject {
     
     /// Provides thread-safe access to given object
     func synchronizedBlock(lockedObject: AnyObject, accessLockedObject: () -> Void) {
@@ -18,4 +18,3 @@ extension NSObject {
     }
     
 }
-
