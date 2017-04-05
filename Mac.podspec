@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Mac'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of Mac.'
+  s.summary          = 'iOS framework to build offline-first mobile apps.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,14 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+iOS framework to build offline-first mobile apps. Create the models then have Mac handle syncing these models with your API.
                        DESC
 
   s.homepage         = 'https://github.com/curiosityio/Mac'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Levi Bostian' => 'levi@curiosityio.com' }
-  s.source           = { :git => 'https://github.com/Levi Bostian/Mac.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/curiosityio/Mac.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
@@ -38,5 +38,10 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'RxSwift', '~> 3.3.1'
+  s.dependency 'RxRealm', '~> 0.5.2'
+  s.dependency 'RealmSwift', '~> 2.5.0'
+  s.dependency 'ObjectMapper', '~> 2.2.5'
+  s.dependency 'Alamofire', '~> 4.4.0'
+  s.dependency 'iOSBoilerplate', '~> 0.1.1'
 end
