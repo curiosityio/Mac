@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-extension Object {
+public extension Object {
     
     func isManaged() -> Bool {
         return realm != nil

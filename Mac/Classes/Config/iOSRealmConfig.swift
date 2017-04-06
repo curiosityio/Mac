@@ -10,12 +10,12 @@ import Foundation
 
 public class iOSRealmConfigBuilder {
     
-    var realmInstanceConfig: RealmInstanceConfig?
-    var migrationManager: RealmMigrationManager?
+    public var realmInstanceConfig: RealmInstanceConfig?
+    public var migrationManager: RealmMigrationManager?
     
-    typealias BuilderClosure = (iOSRealmConfigBuilder) -> ()
+    public typealias BuilderClosure = (iOSRealmConfigBuilder) -> ()
     
-    init(buildClosure: BuilderClosure) {
+    public init(buildClosure: BuilderClosure) {
         buildClosure(self)
     }
     
@@ -24,10 +24,10 @@ public class iOSRealmConfigBuilder {
 internal var iOSRealmConfigInstance: iOSRealmConfig? = nil
 public struct iOSRealmConfig {
     
-    var realmInstanceConfig: RealmInstanceConfig?
-    var migrationManager: RealmMigrationManager?
+    public var realmInstanceConfig: RealmInstanceConfig?
+    public var migrationManager: RealmMigrationManager?
     
-    init?(builder: iOSRealmConfigBuilder) {
+    public init?(builder: iOSRealmConfigBuilder) {
         if let instanceConfig = builder.realmInstanceConfig, let migrationManager = builder.migrationManager {
             self.realmInstanceConfig = instanceConfig
             self.migrationManager = migrationManager

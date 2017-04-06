@@ -9,13 +9,13 @@
 import Foundation
 import RxSwift
 
-class Mac {
+public class Mac {
     
-    static let sharedInstance = Mac()
+    public static let sharedInstance = Mac()
     private init() {
     }
     
-    func runTasks() {
+    public func runTasks() {
         _ = PendingApiTasksRunner.sharedInstance.runPendingTasks()
         .subscribeCompletable({
             MacConfigInstance?.macTasksRunnerManager.doneRunningTasks(tempInstance: false)
@@ -24,7 +24,7 @@ class Mac {
         }
     }
     
-    func runTempInstanceTasks() {
+    public func runTempInstanceTasks() {
         _ = PendingApiTasksRunner.sharedInstance.runPendingTasks(useTempRealmInstance: true)
             .subscribeCompletable({
                 MacConfigInstance?.macTasksRunnerManager.doneRunningTasks(tempInstance: true)
@@ -33,7 +33,7 @@ class Mac {
         }
     }
     
-    func runTask(_ pendingApiTask: PendingApiTask, useTempRealmInstance: Bool = false) {
+    public func runTask(_ pendingApiTask: PendingApiTask, useTempRealmInstance: Bool = false) {
         _ = PendingApiTasksRunner.sharedInstance.runSingleTask(pendingApiTask: pendingApiTask, useTempRealmInstance: useTempRealmInstance)
             .subscribeCompletable({
                 MacConfigInstance?.macTasksRunnerManager.doneRunningSingleTask(pendingApiTask: pendingApiTask)
@@ -42,11 +42,11 @@ class Mac {
         }
     }
     
-    func subNumberPendingTasks() -> BehaviorSubject<Int> {
+    public func subNumberPendingTasks() -> BehaviorSubject<Int> {
         return PendingApiTasksRunner.sharedInstance.numberPendingApiTasksRemaining
     }
     
-    func subNumberTempPendingTasks() -> BehaviorSubject<Int> {
+    public func subNumberTempPendingTasks() -> BehaviorSubject<Int> {
         return PendingApiTasksRunner.sharedInstance.numberTempPendingApiTasksRemaining
     }
 

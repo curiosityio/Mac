@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MacTasksRunnerManager {
+public protocol MacTasksRunnerManager {
     
     func shouldRunApiTasks() -> Bool
     func doneRunningTasks(tempInstance: Bool)

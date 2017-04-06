@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-extension PrimitiveSequence {
+public extension PrimitiveSequence {
     
     public func subscribeCompletable(_ onCompleted: @escaping () -> (), onError: @escaping (Error) -> ()) -> Disposable {
         var stopped = false

@@ -10,10 +10,9 @@ import Foundation
 import RxSwift
 import RealmSwift
 import Alamofire
-import ObjectMapper
 import iOSBoilerplate
 
-public class PendingApiTasksRunner: NSObject {
+internal class PendingApiTasksRunner: NSObject {
     
     internal static let sharedInstance = PendingApiTasksRunner()
     private override init() {
@@ -171,33 +170,33 @@ public class PendingApiTasksRunner: NSObject {
             // We save this to compare later on. If created_at times dont line up, then the model has been edited since API call triggered.
             NSUserDefaultsUtil.saveInt("current_api_sync_task_created_at", value: pendingApiTaskController.createdAt.getIntTimeInverval())
             
-            _ = ApiNetworkingService.executeApiCall(call: apiCall!, errorVo: pendingApiTaskController.getApiErrorVo() ?? ErrorVo())
-                .subscribeSingle({ (apiResponse: Any?) in
-                    let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
-                    try! realm.write {
-                        pendingApiTaskController.processApiResponse(realm: realm, response: apiResponse)
+            _ = pendingApiTaskController.performApiCall(request: apiCall!)
+            .subscribeSingle({ (rawApiResponse: Any?) in
+                let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
+                try! realm.write {
+                    pendingApiTaskController.processApiResponse(realm: realm, rawApiResponse: rawApiResponse)
                         
-                        var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
-                        managedModelPendingApiTaskRepresents.apiSyncInProgress = false
-                        managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.SUCCESS, error: nil)
+                    var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
+                    managedModelPendingApiTaskRepresents.apiSyncInProgress = false
+                    managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.SUCCESS, error: nil)
                         
-                        // If created_at times before and after API call are the same, the model has not been updated by user action and we can safely delete this task and not run again. (update tasks can update during API call)
-                        let managedOriginalPendingApiTask: PendingApiTask = realm.objects(pendingApiTaskController.self as! Object.Type).filter(pendingApiTaskController.queryForExistingTask()) as! PendingApiTask
-                        if NSUserDefaultsUtil.getInt("current_api_sync_task_created_at") == managedOriginalPendingApiTask.createdAt.getIntTimeInverval() {
-                            realm.delete(managedOriginalPendingApiTask as! Object)
-                            managedModelPendingApiTaskRepresents.numberPendingApiSyncs -= 1
-                        }
+                    // If created_at times before and after API call are the same, the model has not been updated by user action and we can safely delete this task and not run again. (update tasks can update during API call)
+                    let managedOriginalPendingApiTask: PendingApiTask = realm.objects(pendingApiTaskController.self as! Object.Type).filter(pendingApiTaskController.queryForExistingTask()) as! PendingApiTask
+                    if NSUserDefaultsUtil.getInt("current_api_sync_task_created_at") == managedOriginalPendingApiTask.createdAt.getIntTimeInverval() {
+                        realm.delete(managedOriginalPendingApiTask as! Object)
+                        managedModelPendingApiTaskRepresents.numberPendingApiSyncs -= 1
                     }
-                    observer(CompletableEvent.completed)
-                }, onError: { (error) in
-                    let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
-                    try! realm.write {
-                        var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
-                        managedModelPendingApiTaskRepresents.apiSyncInProgress = false
-                        managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.ERROR, error: error)
-                    }
-                    observer(CompletableEvent.error(error))
-                })
+                }
+                observer(CompletableEvent.completed)
+            }, onError: { (error) in
+                let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
+                try! realm.write {
+                    var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
+                    managedModelPendingApiTaskRepresents.apiSyncInProgress = false
+                    managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.ERROR, error: error)
+                }
+                observer(CompletableEvent.error(error))
+            })
             return Disposables.create()
         })
     }

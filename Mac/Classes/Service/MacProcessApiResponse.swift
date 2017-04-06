@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MacProcessApiResponse {
+public protocol MacProcessApiResponse {
     
     func success(response: Any?, headers: [AnyHashable : Any])
     func error(statusCode: Int, response: Any?, headers: [AnyHashable : Any]) -> Error?

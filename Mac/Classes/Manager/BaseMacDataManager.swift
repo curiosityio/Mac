@@ -11,7 +11,10 @@ import RealmSwift
 import RxSwift
 import iOSBoilerplate
 
-public class BaseMacDataManager {
+open class BaseMacDataManager {
+    
+    public init() {
+    }
     
     public func performRealmTransaction(changeData: @escaping ((Realm) -> Void), tempRealmInstance: Bool = false) {
         if Thread.isMainThread {
@@ -41,10 +44,10 @@ public class BaseMacDataManager {
         }).subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
     }
     
-    public func getNextAvailableTempModelId() -> Double {
-        let lastUsedId = NSUserDefaultsUtil.getDouble("preferences_last_used_temp_model_id") // TODO iosboidlerplate needs to support doubles.
+    public func getNextAvailableTempModelId() -> Int {
+        let lastUsedId = NSUserDefaultsUtil.getInt("preferences_last_used_temp_model_id") // TODO iosboidlerplate needs to support doubles.
         let nextAvailableTempModelId = lastUsedId - 1
-        NSUserDefaultsUtil.saveDouble("preferences_last_used_temp_model_id", value: nextAvailableTempModelId)
+        NSUserDefaultsUtil.saveInt("preferences_last_used_temp_model_id", value: nextAvailableTempModelId)
         
         return nextAvailableTempModelId
     }

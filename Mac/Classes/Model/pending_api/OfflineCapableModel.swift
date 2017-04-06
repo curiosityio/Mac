@@ -10,8 +10,8 @@ import Foundation
 
 public protocol OfflineCapableModel {
     
-    var realmId: Double { get set }
-    var apiId: Double { get set }
+    var realmId: Int { get set }
+    var apiId: Int { get set }
     var apiSyncInProgress: Bool { get set } // use in UI to show progress bar as model is syncing
     var numberPendingApiSyncs: Int { get set } // used for isPendingApiSync() to indicate if *all* service tasks for syncing this model are complete.
     var deleted: Bool { get set }

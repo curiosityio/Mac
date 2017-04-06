@@ -10,13 +10,13 @@ import Foundation
 
 public class MacConfigBuilder {
     
-    var macProcessApiResponse: MacProcessApiResponse?
-    var macErrorNotifier: MacErrorNotifier?
-    var macTasksRunnerManager: MacTasksRunnerManager?
+    public var macProcessApiResponse: MacProcessApiResponse?
+    public var macErrorNotifier: MacErrorNotifier?
+    public var macTasksRunnerManager: MacTasksRunnerManager?
     
-    typealias BuilderClosure = (MacConfigBuilder) -> ()
+    public typealias BuilderClosure = (MacConfigBuilder) -> ()
     
-    init(buildClosure: BuilderClosure) {
+    public init(buildClosure: BuilderClosure) {
         buildClosure(self)
     }
     
@@ -29,7 +29,7 @@ public struct MacConfig {
     let macErrorNotifier: MacErrorNotifier
     let macTasksRunnerManager: MacTasksRunnerManager
     
-    init?(builder: MacConfigBuilder) {
+    public init?(builder: MacConfigBuilder) {
         if let processApiResponse = builder.macProcessApiResponse, let errorNotifier = builder.macErrorNotifier, let tasksRunner = builder.macTasksRunnerManager {
             self.macProcessApiResponse = processApiResponse
             self.macErrorNotifier = errorNotifier
