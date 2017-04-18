@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import iOSBoilerplate
 
 public class MacConfigBuilder {
     
@@ -33,7 +34,7 @@ public struct MacConfig {
         if let processApiResponse = builder.macProcessApiResponse, let errorNotifier = builder.macErrorNotifier, let tasksRunner = builder.macTasksRunnerManager {
             self.macProcessApiResponse = processApiResponse
             self.macErrorNotifier = errorNotifier
-            self.macTasksRunnerManager = tasksRunner
+            self.macTasksRunnerManager = tasksRunner            
             
             MacConfigInstance = self
         } else {

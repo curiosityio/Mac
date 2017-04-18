@@ -67,12 +67,7 @@ internal class PendingApiTasksRunner: NSObject {
     
     internal func runSingleTask(pendingApiTask: PendingApiTask, useTempRealmInstance: Bool = false) -> Completable {
         return Completable.create(subscribe: { (observer) -> Disposable in
-            var pendingApiTaskToRun = pendingApiTask
-            if (pendingApiTask as! Object).isManaged() {
-                pendingApiTaskToRun = Object(value: pendingApiTask as! Object) as! PendingApiTask
-            }
-            
-            _ = self.runTask(pendingApiTaskController: pendingApiTaskToRun, useTempRealmInstance: useTempRealmInstance)
+            _ = self.runTask(pendingApiTaskController: pendingApiTask, useTempRealmInstance: useTempRealmInstance)
             .subscribeCompletable({ 
                 observer(CompletableEvent.completed)
             }, onError: { (error) in
@@ -100,13 +95,13 @@ internal class PendingApiTasksRunner: NSObject {
                     var nextAvailableApiTaskToRun: PendingApiTask?
                     PendingApiTasksManager.pendingApiTaskTypes.forEach({ (task) in
                         let getAllPendingApiTasksQuery = realm.objects(task as! Object.Type)
-                        var getAllPendingApiTasksQueryFilter = "manuallyRunTask = false"
+                        var getAllPendingApiTasksQueryFilter = NSPredicate(format: "manuallyRunTask = %@", false as CVarArg)
                         
                         if let lastFailedApiTaskCreatedAtTime = self.lastFailedApiTaskCreatedAtTime {
-                            getAllPendingApiTasksQueryFilter += " createdAt > \(lastFailedApiTaskCreatedAtTime)"
+                            getAllPendingApiTasksQueryFilter = NSCompoundPredicate(andPredicateWithSubpredicates: [getAllPendingApiTasksQueryFilter, NSPredicate(format: "createdAt > %@", lastFailedApiTaskCreatedAtTime as CVarArg)])
                         }
                         
-                        getAllPendingApiTasksQuery.filter(NSPredicate(format: getAllPendingApiTasksQueryFilter)).sorted(byKeyPath: "createdAt", ascending: true).forEach({ (apiTask) in
+                        getAllPendingApiTasksQuery.filter(getAllPendingApiTasksQueryFilter).sorted(byKeyPath: "createdAt", ascending: true).forEach({ (apiTask) in
                             if (apiTask as! PendingApiTask).canRunTask(realm: realm) {
                                 nextAvailableApiTaskToRun = (apiTask as! PendingApiTask)
                             }
@@ -117,20 +112,15 @@ internal class PendingApiTasksRunner: NSObject {
                 }
                 
                 func runNextPendingApiTask() {
-                    func stopRunningApiTasks(error: Error? = nil) {
+                    func stopRunningApiTasks() {
                         self.lastFailedApiTaskCreatedAtTime = nil
                         self.currentlyRunningTasks = false
-                        if let error = error {
-                            observer(CompletableEvent.error(error))
-                        } else {
-                            observer(CompletableEvent.completed)
-                        }
+                        observer(CompletableEvent.completed)
                     }
                     
                     let realm: Realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
-                    if let nextTaskToRun: PendingApiTask = getNextTaskToRun(realm: realm) {
-                        let apiSyncController: PendingApiTask = Object(value: nextTaskToRun as! Object) as! PendingApiTask
-                        
+                    if let apiSyncController: PendingApiTask = getNextTaskToRun(realm: realm) {
+                        let pendingApiTaskControllerRef = ThreadSafeReference(to: apiSyncController as! Object)
                         _ = self.runTask(pendingApiTaskController: apiSyncController, useTempRealmInstance: useTempRealmInstance)
                             .subscribeCompletable({
                                 runNextPendingApiTask()
@@ -140,8 +130,18 @@ internal class PendingApiTasksRunner: NSObject {
                                 //                                    stopRunningApiTasks(error: error)
                                 //                                } else {
                                 // If API comes back with error, we don't want to block *all* API tasks. Skip this parent and all it's children and move onto the next.
-                                self.lastFailedApiTaskCreatedAtTime = apiSyncController.createdAt
-                                runNextPendingApiTask()
+                                MacConfigInstance?.macTasksRunnerManager.errorRunningTasks(tempInstance: useTempRealmInstance, error: error)
+                                
+                                DispatchQueue(label: "background").async {
+                                    autoreleasepool {
+                                        let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
+                                        let apiSyncController = realm.resolve(pendingApiTaskControllerRef) as! PendingApiTask
+                                        try! realm.write {
+                                            self.lastFailedApiTaskCreatedAtTime = apiSyncController.createdAt
+                                        }
+                                        runNextPendingApiTask()
+                                    }
+                                }
                                 //                                }
                             })
                     } else {
@@ -157,12 +157,13 @@ internal class PendingApiTasksRunner: NSObject {
     
     fileprivate func runTask(pendingApiTaskController: PendingApiTask, useTempRealmInstance: Bool) -> Completable {
         return Completable.create(subscribe: { (observer) -> Disposable in
+            let pendingApiTaskControllerRef = ThreadSafeReference(to: pendingApiTaskController as! Object)
             var apiCall: URLRequestConvertible? = nil
             let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
             try! realm.write {
                 var modelForTask: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
                 modelForTask.apiSyncInProgress = true
-                modelForTask.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.RUNNING, error: nil)
+                modelForTask.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.running, error: nil)
                 
                 apiCall = pendingApiTaskController.getApiCall(realm: realm)
             }
@@ -172,30 +173,39 @@ internal class PendingApiTasksRunner: NSObject {
             
             _ = pendingApiTaskController.performApiCall(request: apiCall!)
             .subscribeSingle({ (rawApiResponse: Any?) in
-                let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
-                try! realm.write {
-                    pendingApiTaskController.processApiResponse(realm: realm, rawApiResponse: rawApiResponse)
-                        
-                    var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
-                    managedModelPendingApiTaskRepresents.apiSyncInProgress = false
-                    managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.SUCCESS, error: nil)
-                        
-                    // If created_at times before and after API call are the same, the model has not been updated by user action and we can safely delete this task and not run again. (update tasks can update during API call)
-                    let managedOriginalPendingApiTask: PendingApiTask = realm.objects(pendingApiTaskController.self as! Object.Type).filter(pendingApiTaskController.queryForExistingTask()) as! PendingApiTask
-                    if NSUserDefaultsUtil.getInt("current_api_sync_task_created_at") == managedOriginalPendingApiTask.createdAt.getIntTimeInverval() {
-                        realm.delete(managedOriginalPendingApiTask as! Object)
-                        managedModelPendingApiTaskRepresents.numberPendingApiSyncs -= 1
+                DispatchQueue(label: "background").async {
+                    autoreleasepool {
+                        let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
+                        let pendingApiTaskController: PendingApiTask = realm.resolve(pendingApiTaskControllerRef)! as! PendingApiTask
+                        try! realm.write {
+                            pendingApiTaskController.processApiResponse(realm: realm, rawApiResponse: rawApiResponse)
+                            
+                            var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
+                            managedModelPendingApiTaskRepresents.apiSyncInProgress = false
+                            managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.success, error: nil)
+                            
+                            // If created_at times before and after API call are the same, the model has not been updated by user action and we can safely delete this task and not run again. (update tasks can update during API call)
+                            if NSUserDefaultsUtil.getInt("current_api_sync_task_created_at") == pendingApiTaskController.createdAt.getIntTimeInverval() {
+                                realm.delete(pendingApiTaskController as! Object)
+                                managedModelPendingApiTaskRepresents.numberPendingApiSyncs -= 1
+                            }
+                        }
+                        observer(CompletableEvent.completed)
                     }
                 }
-                observer(CompletableEvent.completed)
             }, onError: { (error) in
-                let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
-                try! realm.write {
-                    var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
-                    managedModelPendingApiTaskRepresents.apiSyncInProgress = false
-                    managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.ERROR, error: error)
+                DispatchQueue(label: "background").async {
+                    autoreleasepool {
+                        let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
+                        let pendingApiTaskController: PendingApiTask = realm.resolve(pendingApiTaskControllerRef)! as! PendingApiTask
+                        try! realm.write {
+                            var managedModelPendingApiTaskRepresents: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
+                            managedModelPendingApiTaskRepresents.apiSyncInProgress = false
+                            managedModelPendingApiTaskRepresents.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.error, error: error)
+                        }
+                        observer(CompletableEvent.error(error))
+                    }
                 }
-                observer(CompletableEvent.error(error))
             })
             return Disposables.create()
         })

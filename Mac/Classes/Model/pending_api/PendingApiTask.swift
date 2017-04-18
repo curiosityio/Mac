@@ -13,7 +13,7 @@ import RealmSwift
 
 public protocol PendingApiTask {
     
-    func queryForExistingTask() -> NSPredicate
+    func queryForExistingTask(realm: Realm) -> PendingApiTask?
     
     func canRunTask(realm: Realm) -> Bool
     
