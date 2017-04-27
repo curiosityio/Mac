@@ -22,7 +22,7 @@ open class BaseMacDataManager {
         }
         
         let realm = getRealmInstance(tempInstance: tempRealmInstance)
-        try! realm.write {
+        try! realm.writeIfNotAlready {
             changeData(realm)
         }
     }
@@ -50,12 +50,14 @@ open class BaseMacDataManager {
         return UUID().uuidString
     }
     
-    public func createData<MODEL, PENDING_API_TASK_MODEL>(realm: Realm, data: inout MODEL, makeAdditionalRealmChanges: (MODEL) -> Void, pendingApiTask: PENDING_API_TASK_MODEL) where MODEL: OfflineCapableModel, PENDING_API_TASK_MODEL: PendingApiTask {
+    public func createData<MODEL, PENDING_API_TASK>(realm: Realm, data: inout MODEL, makeAdditionalRealmChanges: (MODEL) -> Void, pendingApiTasks: [PENDING_API_TASK]) where MODEL: OfflineCapableModel, PENDING_API_TASK: Object, PENDING_API_TASK: PendingApiTask {
         realm.add(data as! Object, update: false) // we don't want to update. We want the call to FAIL. Why? Because we should be calling updateData() instead of create if you already have data with the same primary key in the realm.
             
         makeAdditionalRealmChanges(data)
         
-        realm.add(pendingApiTask as! Object)
+        pendingApiTasks.forEach { (task: PENDING_API_TASK) in
+            realm.add(task)
+        }
         
         data.numberPendingApiSyncs += 1
     }
@@ -75,6 +77,28 @@ open class BaseMacDataManager {
         }
         realm.add(pendingApiTask, update: true) // updates created_at value which tells pending API task runner to run *another* update on the model.
     }
+//    
+//    // in future, make the pendingApiTask have have an interface for updating. We want to make sure that
+//    // only create, update, delete pending API models are calling the appropriate methods.
+//    public func updateData<MODEL, PENDING_API_TASK>(realm: Realm, modelClass: MODEL.Type, realmId: String, updateValues: (MODEL) -> Void, pendingApiTasks: [PENDING_API_TASK]) where MODEL: OfflineCapableModel, PENDING_API_TASK: Object, PENDING_API_TASK: PendingApiTask {
+//        guard modelClass is Object.Type else {
+//            fatalError("modelClass param must be instance of Object")
+//        }
+//        
+//        guard var modelToUpdateValues = (realm.objects(modelClass as! Object.Type).filter(NSPredicate(format: "realmId == %@", realmId)).first as? MODEL?) else {
+//            fatalError("\((modelClass as! Object.Type).className()) model to update is null. Cannot find it in Realm.")
+//        }
+//        
+//        updateValues(modelToUpdateValues!)
+//        
+//        pendingApiTasks.forEach { (task: PENDING_API_TASK) in
+//            let existingPendingApiTask = task.queryForExistingTask(realm: realm)
+//            if existingPendingApiTask == nil {
+//                modelToUpdateValues!.numberPendingApiSyncs += 1
+//            }
+//            realm.add(task, update: true) // updates created_at value which tells pending API task runner to run *another* update on the model.
+//        }
+//    }
     
     public func deleteData<MODEL, PENDING_API_TASK>(realm: Realm, modelClass: MODEL.Type, realmId: String, updateValues: ((MODEL) -> Void), pendingApiTask: PENDING_API_TASK? = nil) where MODEL: Object, MODEL: OfflineCapableModel, PENDING_API_TASK: Object, PENDING_API_TASK: PendingApiTask {
         guard var modelToUpdateValues = realm.objects(modelClass).filter(NSPredicate(format: "realmId == %@", realmId)).first else {

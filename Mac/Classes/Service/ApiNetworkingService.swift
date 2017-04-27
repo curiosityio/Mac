@@ -46,19 +46,52 @@ public class ApiNetworkingService {
                 case .success(let upload, _, _):
                     upload.responseJSON(completionHandler: { (response: DataResponse<Any>) in
                         let responseCode = response.response!.statusCode
-                        _ = determineErrorResponse(response: response, responseStatusCode: responseCode, parseError: parseError)
-                            .subscribeSingle({ (responseValue) in
-                                observer(SingleEvent.success(responseValue))
-                            }, onError: { (error) in
-                                observer(SingleEvent.error(error))
-                            })
+                        switch response.result {
+                        case .success:
+                            _ = determineErrorResponse(response: response, responseStatusCode: responseCode, parseError: parseError)
+                                .subscribeSingle({ (responseValue) in
+                                    observer(SingleEvent.success(responseValue))
+                                }, onError: { (error) in
+                                    observer(SingleEvent.error(error))
+                                })
+                        case .failure(let error):
+                            MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
+                            
+                            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(statusCode: responseCode, response: response, headers: response.response!.allHeaderFields) {
+                                observer(SingleEvent.error(macConfigError))
+                            } else {
+                                observer(SingleEvent.error(APIError.apiCallFailure))
+                            }
+                        }
                     })
                 case .failure(let error):
-                    observer(SingleEvent.error(error))
+                    MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
+                    observer(SingleEvent.error(APIError.apiCallFailure))
                 }
             }
             return Disposables.create()
         }
+    }
+    
+    public class func executeDownloadToFile(url: String) -> Single<String> {
+        return Single<String>.create(subscribe: { (observer) -> Disposable in
+            if url.doesFileExistInDocumentsDir() {
+                observer(SingleEvent.success(url.getDocumentsDirectoryFilePathFromRemotePath()!))
+            } else {
+                let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
+                
+                Alamofire.download(url, to: destination).response { response in
+                    if let downloadError = response.error {
+                        observer(SingleEvent.error(downloadError))
+                    } else {
+                        let filePath: String = response.destinationURL!.path
+                        
+                        observer(SingleEvent.success(filePath))
+                    }
+                }
+            }
+            return Disposables.create()
+        })
     }
     
     public class func executeApiCall(call: URLRequestConvertible, parseError: @escaping (Any?) -> String) -> Single<Any?> {
@@ -67,9 +100,9 @@ public class ApiNetworkingService {
             
             Alamofire.request(call)
                 .responseJSON { (response: DataResponse<Any>) in
+                    let responseCode = response.response!.statusCode
                     switch response.result {
                     case .success:
-                        let responseCode = response.response!.statusCode
                         _ = determineErrorResponse(response: response, responseStatusCode: responseCode, parseError: parseError)
                             .subscribeSingle({ (responseValue) in
                                 observer(SingleEvent.success(responseValue))
@@ -77,7 +110,13 @@ public class ApiNetworkingService {
                                 observer(SingleEvent.error(error))
                             })
                     case .failure(let error):
-                        observer(SingleEvent.error(error))
+                        MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
+                        
+                        if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(statusCode: responseCode, response: response, headers: response.response!.allHeaderFields) {
+                            observer(SingleEvent.error(macConfigError))
+                        } else {
+                            observer(SingleEvent.error(APIError.apiCallFailure))
+                        }
                     }
             }
             return Disposables.create()

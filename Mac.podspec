@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Mac'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'iOS framework to build offline-first mobile apps.'
 
 # This description is used to generate tags and improve search results.
@@ -38,9 +38,9 @@ iOS framework to build offline-first mobile apps. Create the models then have Ma
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'RxSwift', '~> 3.3.1'
-  s.dependency 'RxRealm', '~> 0.5.2'
-  s.dependency 'RealmSwift', '~> 2.5.0'
+  s.dependency 'RxSwift', '~> 3.4.0'
+  s.dependency 'RxRealm', '~> 0.6.0'
+  s.dependency 'RealmSwift', '~> 2.6.2'
   s.dependency 'Alamofire', '~> 4.4.0'
-  s.dependency 'iOSBoilerplate', '~> 0.2.2'
+  s.dependency 'iOSBoilerplate', '~> 0.3.0'
 end

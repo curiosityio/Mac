@@ -5,11 +5,10 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - iOSBoilerplate (0.2.1)
-  - Mac (0.1.0):
+  - iOSBoilerplate (0.3.0)
+  - Mac (0.1.1):
     - Alamofire (~> 4.4.0)
-    - iOSBoilerplate (~> 0.2.1)
-    - ObjectMapper (~> 2.2.5)
+    - iOSBoilerplate (~> 0.3.0)
     - RealmSwift (~> 2.5.0)
     - RxRealm (~> 0.5.2)
     - RxSwift (~> 3.3.1)
@@ -20,13 +19,12 @@ PODS:
     - FBSnapshotTestCase (~> 2.0)
     - Nimble
     - Quick
-  - ObjectMapper (2.2.5)
   - Quick (1.0.0)
-  - Realm (2.5.0):
-    - Realm/Headers (= 2.5.0)
-  - Realm/Headers (2.5.0)
-  - RealmSwift (2.5.0):
-    - Realm (= 2.5.0)
+  - Realm (2.5.1):
+    - Realm/Headers (= 2.5.1)
+  - Realm/Headers (2.5.1)
+  - RealmSwift (2.5.1):
+    - Realm (= 2.5.1)
   - RxRealm (0.5.2):
     - RealmSwift (~> 2.4)
     - RxSwift (~> 3.1)
@@ -46,14 +44,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  iOSBoilerplate: 7e84f9225ce84dda48845abac46afe39a638808a
-  Mac: add7c37644800fd37c917b078fb0db0ac1c7136a
+  iOSBoilerplate: cb96a7c7e49a9b82adf885f6bf3a35565d1a2284
+  Mac: c1f717916da562bf6081254d6c0b7e1f8b9596f8
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
-  ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
-  Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
-  RealmSwift: 9f1a8f624f2f153410115c2cb7d486be9976565d
+  Realm: 32f86104d37c8521f864d4274050b38ba6190733
+  RealmSwift: f719e7511c902b8908593e8f143f59e47931bdb6
   RxRealm: df024f04e64c3a9723dab63a6ec8621b3db6473f
   RxSwift: 8fc9f2de6275a9101d518444e00bf32f1a42caac
 

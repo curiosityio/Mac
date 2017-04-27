@@ -11,6 +11,7 @@ import Foundation
 public enum APIError: Error, LocalizedError {
     case parseErrorFromAPIException
     
+    case apiCallFailure
     case api500ApiDown
     case api403UserNotEnoughPrivileges
     case api401UserUnauthorized
@@ -18,6 +19,8 @@ public enum APIError: Error, LocalizedError {
     
     public var errorDescription: String? {
         switch self {
+        case .apiCallFailure:
+            return NSLocalizedString("There seems to be an error. Sorry about that. Try again.", comment: "")
         case .api500ApiDown:
             return NSLocalizedString("The system is currently down. Come back later and try again.", comment: "")
         case .api403UserNotEnoughPrivileges:

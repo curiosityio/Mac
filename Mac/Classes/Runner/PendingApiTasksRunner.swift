@@ -158,20 +158,17 @@ internal class PendingApiTasksRunner: NSObject {
     fileprivate func runTask(pendingApiTaskController: PendingApiTask, useTempRealmInstance: Bool) -> Completable {
         return Completable.create(subscribe: { (observer) -> Disposable in
             let pendingApiTaskControllerRef = ThreadSafeReference(to: pendingApiTaskController as! Object)
-            var apiCall: URLRequestConvertible? = nil
             let realm = self.getRealmInstance(tempInstance: useTempRealmInstance)
             try! realm.write {
                 var modelForTask: OfflineCapableModel = pendingApiTaskController.getOfflineModelTaskRepresents(realm: realm)
                 modelForTask.apiSyncInProgress = true
                 modelForTask.statusUpdate(task: pendingApiTaskController, status: OfflineCapableModelStatus.running, error: nil)
-                
-                apiCall = pendingApiTaskController.getApiCall(realm: realm)
             }
             
             // We save this to compare later on. If created_at times dont line up, then the model has been edited since API call triggered.
             NSUserDefaultsUtil.saveInt("current_api_sync_task_created_at", value: pendingApiTaskController.createdAt.getIntTimeInverval())
             
-            _ = pendingApiTaskController.performApiCall(request: apiCall!)
+            _ = pendingApiTaskController.performApiCall(realm: realm)
             .subscribeSingle({ (rawApiResponse: Any?) in
                 DispatchQueue(label: "background").async {
                     autoreleasepool {
