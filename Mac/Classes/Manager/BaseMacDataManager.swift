@@ -50,13 +50,13 @@ open class BaseMacDataManager {
         return UUID().uuidString
     }
     
-    public func createData<MODEL, PENDING_API_TASK>(realm: Realm, data: inout MODEL, makeAdditionalRealmChanges: (MODEL) -> Void, pendingApiTasks: [PENDING_API_TASK]) where MODEL: OfflineCapableModel, PENDING_API_TASK: Object, PENDING_API_TASK: PendingApiTask {
+    public func createData<MODEL, PENDING_API_TASK>(realm: Realm, data: inout MODEL, makeAdditionalRealmChanges: (MODEL) -> Void, pendingApiTasks: [PENDING_API_TASK]) where MODEL: OfflineCapableModel, PENDING_API_TASK: PendingApiTask {
         realm.add(data as! Object, update: false) // we don't want to update. We want the call to FAIL. Why? Because we should be calling updateData() instead of create if you already have data with the same primary key in the realm.
             
         makeAdditionalRealmChanges(data)
         
         pendingApiTasks.forEach { (task: PENDING_API_TASK) in
-            realm.add(task)
+            realm.add(task as! Object)
         }
         
         data.numberPendingApiSyncs += 1

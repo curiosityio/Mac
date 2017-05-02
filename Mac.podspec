@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Mac'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'iOS framework to build offline-first mobile apps.'
 
 # This description is used to generate tags and improve search results.

@@ -11,6 +11,6 @@ import Foundation
 public protocol MacProcessApiResponse {
     
     func success(response: Any?, headers: [AnyHashable : Any])
-    func error(statusCode: Int, response: Any?, headers: [AnyHashable : Any]) -> Error?
+    func error(error: Error?, statusCode: Int?, response: Any?, headers: [AnyHashable : Any]?) -> Error?
     
 }

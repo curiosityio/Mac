@@ -57,7 +57,7 @@ public class ApiNetworkingService {
                         case .failure(let error):
                             MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
                             
-                            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(statusCode: responseCode, response: response, headers: response.response!.allHeaderFields) {
+                            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, response: response, headers: response.response!.allHeaderFields) {
                                 observer(SingleEvent.error(macConfigError))
                             } else {
                                 observer(SingleEvent.error(APIError.apiCallFailure))
@@ -100,10 +100,10 @@ public class ApiNetworkingService {
             
             Alamofire.request(call)
                 .responseJSON { (response: DataResponse<Any>) in
-                    let responseCode = response.response!.statusCode
+                    let responseCode: Int? = response.response?.statusCode
                     switch response.result {
                     case .success:
-                        _ = determineErrorResponse(response: response, responseStatusCode: responseCode, parseError: parseError)
+                        _ = determineErrorResponse(response: response, responseStatusCode: responseCode!, parseError: parseError)
                             .subscribeSingle({ (responseValue) in
                                 observer(SingleEvent.success(responseValue))
                             }, onError: { (error) in
@@ -112,7 +112,7 @@ public class ApiNetworkingService {
                     case .failure(let error):
                         MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
                         
-                        if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(statusCode: responseCode, response: response, headers: response.response!.allHeaderFields) {
+                        if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, response: response, headers: response.response?.allHeaderFields) {
                             observer(SingleEvent.error(macConfigError))
                         } else {
                             observer(SingleEvent.error(APIError.apiCallFailure))
@@ -129,7 +129,7 @@ public class ApiNetworkingService {
                 MacConfigInstance?.macProcessApiResponse.success(response: response.value, headers: response.response!.allHeaderFields)
                 observer(SingleEvent.success(response.value))
             } else {
-                if let userProcessedError = MacConfigInstance?.macProcessApiResponse.error(statusCode: responseStatusCode, response: response.value, headers: response.response!.allHeaderFields) {
+                if let userProcessedError = MacConfigInstance?.macProcessApiResponse.error(error: nil, statusCode: responseStatusCode, response: response.value, headers: response.response!.allHeaderFields) {
                     observer(SingleEvent.error(userProcessedError))
                 } else {
                     switch responseStatusCode {
