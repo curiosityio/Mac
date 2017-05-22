@@ -17,6 +17,10 @@ public enum APIError: Error, LocalizedError {
     case api401UserUnauthorized
     case apiSome400error(errorMessage: String)
     
+    case noInternetConnection
+    case connectionTimeout
+    case backendNetworkError // happens when user encountered network error that is more then likely not the user's problem. You should log this and take care of the issue. 
+    
     public var errorDescription: String? {
         switch self {
         case .apiCallFailure:
@@ -32,6 +36,13 @@ public enum APIError: Error, LocalizedError {
             
         case .parseErrorFromAPIException:
             return NSLocalizedString("Unknown error. Sorry, try again.", comment: "")
+            
+        case .noInternetConnection:
+            return NSLocalizedString("Not connected to the Internet.", comment: "")
+        case .connectionTimeout:
+            return NSLocalizedString("Lost connection to the Internet. Please, try again.", comment: "")
+        case .backendNetworkError:
+            return NSLocalizedString("We encountered an issue with the app. Please, try again later.", comment: "")
         }
     }
 }

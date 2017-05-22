@@ -55,13 +55,7 @@ public class ApiNetworkingService {
                                     observer(SingleEvent.error(error))
                                 })
                         case .failure(let error):
-                            MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
-                            
-                            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, response: response, headers: response.response!.allHeaderFields) {
-                                observer(SingleEvent.error(macConfigError))
-                            } else {
-                                observer(SingleEvent.error(APIError.apiCallFailure))
-                            }
+                            responseFailureEncountered(error, observer: observer, responseCode: responseCode, response: response)
                         }
                     })
                 case .failure(let error):
@@ -110,16 +104,31 @@ public class ApiNetworkingService {
                                 observer(SingleEvent.error(error))
                             })
                     case .failure(let error):
-                        MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
-                        
-                        if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, response: response, headers: response.response?.allHeaderFields) {
-                            observer(SingleEvent.error(macConfigError))
-                        } else {
-                            observer(SingleEvent.error(APIError.apiCallFailure))
-                        }
+                        responseFailureEncountered(error, observer: observer, responseCode: responseCode, response: response)
                     }
             }
             return Disposables.create()
+        }
+    }
+    
+    private class func responseFailureEncountered(_ error: Error, observer: (SingleEvent<Any?>) -> (), responseCode: Int?, response: DataResponse<Any>) {
+        if let urlError = error as? URLError {
+            if urlError.code == URLError.Code.notConnectedToInternet {
+                observer(SingleEvent.error(APIError.noInternetConnection))
+            } else if urlError.code == URLError.Code.timedOut || urlError.code == URLError.Code.networkConnectionLost {
+                observer(SingleEvent.error(APIError.connectionTimeout))
+            } else {
+                MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
+                observer(SingleEvent.error(APIError.backendNetworkError))
+            }
+        } else {
+            MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
+            
+            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, response: response, headers: response.response?.allHeaderFields) {
+                observer(SingleEvent.error(macConfigError))
+            } else {
+                observer(SingleEvent.error(APIError.apiCallFailure))
+            }
         }
     }
     
