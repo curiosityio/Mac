@@ -554,6 +554,7 @@
 		F60D221B548716DF35193FC2CF244676 /* BeAKindOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E114694884B6E0786053B84621F3CA /* BeAKindOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		F693D0A9E0D05F815A85DC258E75AF8D /* CurrentTestCaseTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B12D3CF4BCEA815D157FC6B0A74C0D4 /* CurrentTestCaseTracker.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		F6BECD98B97CBFEBE2C96F0E9E72A6C0 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6B53E5D4E6DC199BA48387C54F15F /* ResponseSerialization.swift */; };
+		F71E01A51F3D3A2700824380 /* MacAlamofireConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71E01A41F3D3A2700824380 /* MacAlamofireConfigurationManager.swift */; };
 		F727DFE9CA51A83F68B30A287126511E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA50CA90AF008746C494CEE9E7C6F3 /* Errors.swift */; };
 		F74F92C21EAFCFC300287F1C /* RealmExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74F92C11EAFCFC300287F1C /* RealmExtensions.swift */; };
 		F7ADECDBA75698E6B4536ABC47130A94 /* RLMSyncManager_Private.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 3FF2949F6B4F815C76DA94099FB932C2 /* RLMSyncManager_Private.h */; };
@@ -1382,6 +1383,7 @@
 		F69A6567B328BB6F7E8464423B0C4B5D /* ExampleHooks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExampleHooks.swift; path = Sources/Quick/Hooks/ExampleHooks.swift; sourceTree = "<group>"; };
 		F6E44ED7C0476609EB57749DB37562A4 /* Nimble-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-umbrella.h"; sourceTree = "<group>"; };
 		F6F7A90819FCCED0DD800C5387A55975 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F71E01A41F3D3A2700824380 /* MacAlamofireConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAlamofireConfigurationManager.swift; sourceTree = "<group>"; };
 		F7440293B8FE32AEB598CAB0B9BCD6B7 /* BuildUtil.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BuildUtil.swift; path = iOSBoilerplate/Classes/Util/BuildUtil.swift; sourceTree = "<group>"; };
 		F74B24346C25CC2649D90279FC549D35 /* SwitchIfEmpty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwitchIfEmpty.swift; path = RxSwift/Observables/Implementations/SwitchIfEmpty.swift; sourceTree = "<group>"; };
 		F74F92C11EAFCFC300287F1C /* RealmExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmExtensions.swift; sourceTree = "<group>"; };
@@ -1557,6 +1559,7 @@
 				6D3A3C8CF548B18A39C8C6126F98EF21 /* PendingApiTasksManager.swift */,
 				FB36642FB9115A55030AE8F384002616 /* RealmInstanceManager.swift */,
 				419F671F9DE8AF8C8350F825ACB557A2 /* RealmMigrationManager.swift */,
+				F71E01A41F3D3A2700824380 /* MacAlamofireConfigurationManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -3401,6 +3404,7 @@
 				FBFBEC1BA2D9D8005E854D1A222A2D9D /* RealmInstanceConfig.swift in Sources */,
 				937B3881E5D5A3FE5E74FDF27318A8FC /* RealmInstanceManager.swift in Sources */,
 				A54499C8543AC609F617D9CACBE73D34 /* RealmMigrationManager.swift in Sources */,
+				F71E01A51F3D3A2700824380 /* MacAlamofireConfigurationManager.swift in Sources */,
 				2D907253FF79F82AAF3CF28CE47C15F3 /* RealmObjectExtensions.swift in Sources */,
 				0897F9C1354297693E1F3A2184DA486B /* RxSwiftExtensions.swift in Sources */,
 			);

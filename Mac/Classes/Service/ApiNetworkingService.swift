@@ -30,11 +30,30 @@ public class ApiNetworkingService {
         var mimeType: String!
     }
     
+    fileprivate class var sessionManager: SessionManager {
+        get {
+            guard let alamofireConfiguration = MacConfigInstance?.macAlamofireConfigurationManager else {
+                fatalError("You need to configure Mac before peforming any API calls.")
+            }
+            
+            var sessionManager = Alamofire.SessionManager.default
+            if let sessionConfiguration = alamofireConfiguration.urlSessionConfig {
+                sessionManager = SessionManager(configuration: sessionConfiguration)
+            }
+            
+            if let requestAdapter = alamofireConfiguration.requestAdapter {
+                sessionManager.adapter = requestAdapter
+            }
+            
+            return sessionManager
+        }
+    }
+    
     public class func executeUploadApiCall(_ call: URLRequestConvertible, data: [UploadMultipartFormData], files: [UploadFileMultipartFormData], parseError: @escaping (Any?) -> String) -> Single<Any?> {
         return Single<Any?>.create { observer in
             clearCacheIfDev()
         
-            Alamofire.upload(multipartFormData: { (multiformData) in
+            sessionManager.upload(multipartFormData: { (multiformData) in
                 for formData in data {
                     multiformData.append(formData.data, withName: formData.name)
                 }
@@ -74,7 +93,7 @@ public class ApiNetworkingService {
             } else {
                 let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
                 
-                Alamofire.download(url, to: destination).response { response in
+                sessionManager.download(url, to: destination).response { response in
                     if let downloadError = response.error {
                         observer(SingleEvent.error(downloadError))
                     } else {
@@ -92,7 +111,7 @@ public class ApiNetworkingService {
         return Single<Any?>.create { observer in
             clearCacheIfDev()
             
-            Alamofire.request(call)
+            sessionManager.request(call)
                 .responseJSON { (response: DataResponse<Any>) in
                     let responseCode: Int? = response.response?.statusCode
                     switch response.result {
