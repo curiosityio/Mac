@@ -32,16 +32,16 @@ public class ApiNetworkingService {
     
     fileprivate class var sessionManager: SessionManager {
         get {
-            guard let alamofireConfiguration = MacConfigInstance?.macAlamofireConfigurationManager else {
+            guard let alamofireConfiguration = MacConfigInstance?.macAlamofireConfig else {
                 fatalError("You need to configure Mac before peforming any API calls.")
             }
             
             var sessionManager = Alamofire.SessionManager.default
-            if let sessionConfiguration = alamofireConfiguration.urlSessionConfig {
+            if let sessionConfiguration = alamofireConfiguration.getUrlSessionConfig() {
                 sessionManager = SessionManager(configuration: sessionConfiguration)
             }
             
-            if let requestAdapter = alamofireConfiguration.requestAdapter {
+            if let requestAdapter = alamofireConfiguration.getRequestAdapter() {
                 sessionManager.adapter = requestAdapter
             }
             
