@@ -1,5 +1,5 @@
 //
-//  APIError.swift
+//  MacAPIError.swift
 //  Pods
 //
 //  Created by Levi Bostian on 4/4/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum APIError: Error, LocalizedError {
+public enum MacAPIError: Error, LocalizedError {
     case parseErrorFromAPIException
     
     case apiCallFailure

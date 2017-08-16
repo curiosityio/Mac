@@ -79,7 +79,7 @@ public class ApiNetworkingService {
                     })
                 case .failure(let error):
                     MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
-                    observer(SingleEvent.error(APIError.apiCallFailure))
+                    observer(SingleEvent.error(MacAPIError.apiCallFailure))
                 }
             }
             return Disposables.create()
@@ -132,21 +132,29 @@ public class ApiNetworkingService {
     
     private class func responseFailureEncountered(_ error: Error, observer: (SingleEvent<Any?>) -> (), responseCode: Int?, response: DataResponse<Any>) {
         if let urlError = error as? URLError {
+            var networkError: Error? = nil
+            
             if urlError.code == URLError.Code.notConnectedToInternet {
-                observer(SingleEvent.error(APIError.noInternetConnection))
+                networkError = MacAPIError.noInternetConnection
             } else if urlError.code == URLError.Code.timedOut || urlError.code == URLError.Code.networkConnectionLost {
-                observer(SingleEvent.error(APIError.connectionTimeout))
+                networkError = MacAPIError.connectionTimeout
             } else {
-                MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
-                observer(SingleEvent.error(APIError.backendNetworkError))
+//                MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
+                networkError = MacAPIError.backendNetworkError
+            }
+            
+            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: networkError, statusCode: responseCode, rawResponse: response, responseBody: response.value, headers: response.response?.allHeaderFields) {
+                observer(SingleEvent.error(macConfigError))
+            } else {
+                observer(SingleEvent.error(networkError!))
             }
         } else {
             MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
             
-            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, rawResponse: response, responseBody: response, headers: response.response?.allHeaderFields) {
+            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, rawResponse: response, responseBody: response.value, headers: response.response?.allHeaderFields) {
                 observer(SingleEvent.error(macConfigError))
             } else {
-                observer(SingleEvent.error(APIError.apiCallFailure))
+                observer(SingleEvent.error(MacAPIError.apiCallFailure))
             }
         }
     }
@@ -162,20 +170,20 @@ public class ApiNetworkingService {
                 } else {
                     switch responseStatusCode {
                     case _ where responseStatusCode >= 500:
-                        let error = APIError.api500ApiDown
+                        let error = MacAPIError.api500ApiDown
                         observer(SingleEvent.error(error))
                         MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
                         break
                     case _ where responseStatusCode == 403:
-                        let error = APIError.api403UserNotEnoughPrivileges
+                        let error = MacAPIError.api403UserNotEnoughPrivileges
                         observer(SingleEvent.error(error))
                         MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
                         break
                     case _ where responseStatusCode == 401:
-                        observer(SingleEvent.error(APIError.api401UserUnauthorized))
+                        observer(SingleEvent.error(MacAPIError.api401UserUnauthorized))
                         break
                     default:
-                        observer(SingleEvent.error(APIError.apiSome400error(errorMessage: parseError(response.value))))
+                        observer(SingleEvent.error(MacAPIError.apiSome400error(errorMessage: parseError(response.value))))
                         break
                     }
                 }

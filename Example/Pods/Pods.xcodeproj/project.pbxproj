@@ -144,7 +144,7 @@
 		3E33BE071F8CC5EDBBC15C123D3D19F8 /* SerialDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2D8B47CAC7171C90A18F37AF90AA0 /* SerialDisposable.swift */; };
 		3EDCABE242EFA822FE0F743209590332 /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F9FCBCCAD275EF771B307986DCF0C5 /* Deprecated.swift */; };
 		3EF68CB88E1F569D69C786C2D3DD024B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D7D8B7EBA87AB65B4007C9E2B89083D /* Foundation.framework */; };
-		3F6AFC5427A1474283E478F2273FCAEA /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2997A8DA6CB26E8DB6792994739EBCB7 /* APIError.swift */; };
+		3F6AFC5427A1474283E478F2273FCAEA /* MacAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2997A8DA6CB26E8DB6792994739EBCB7 /* MacAPIError.swift */; };
 		405C05F35284397CC53C825B2B0FD8EA /* ConcurrentMainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34A3FEFC834CB3B37DA783FF96FE87B /* ConcurrentMainScheduler.swift */; };
 		409FAF576DBF8C84A9B6E18637ACE6E6 /* QuickSelectedTestSuiteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC61F0564808DC84AD50C9025E2FA6 /* QuickSelectedTestSuiteBuilder.swift */; };
 		40DFBA37EC892AAA1E90AF4889E0049C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AA8619BCA5678315D8DE5203044FBD /* Quick.framework */; };
@@ -924,7 +924,7 @@
 		286B88EC0391E346AB86E86BEEE3759C /* RLMSyncUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMSyncUtil.h; path = include/RLMSyncUtil.h; sourceTree = "<group>"; };
 		2890B25697568AEAD885C196374E0CD9 /* AnonymousDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnonymousDisposable.swift; path = RxSwift/Disposables/AnonymousDisposable.swift; sourceTree = "<group>"; };
 		2912BA0983F6433E666CA77A9CC06DD5 /* Timeline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Timeline.swift; path = Source/Timeline.swift; sourceTree = "<group>"; };
-		2997A8DA6CB26E8DB6792994739EBCB7 /* APIError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		2997A8DA6CB26E8DB6792994739EBCB7 /* MacAPIError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MacAPIError.swift; sourceTree = "<group>"; };
 		29A0F26113AF2549B0A4CC650EDA7D0E /* RLMCollection.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMCollection.mm; path = Realm/RLMCollection.mm; sourceTree = "<group>"; };
 		29AA8619BCA5678315D8DE5203044FBD /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29DFBFABEF74F9A94B5F2EA2339CCDEA /* BehaviorSubject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BehaviorSubject.swift; path = RxSwift/Subjects/BehaviorSubject.swift; sourceTree = "<group>"; };
@@ -2478,7 +2478,7 @@
 		ED0F0D5F90B2794302399769C878796C /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				2997A8DA6CB26E8DB6792994739EBCB7 /* APIError.swift */,
+				2997A8DA6CB26E8DB6792994739EBCB7 /* MacAPIError.swift */,
 				9AABA4E94F95A5DE2BB3D2E01680DE6F /* MacErrorNotifier.swift */,
 			);
 			path = Error;
@@ -3386,7 +3386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F6AFC5427A1474283E478F2273FCAEA /* APIError.swift in Sources */,
+				3F6AFC5427A1474283E478F2273FCAEA /* MacAPIError.swift in Sources */,
 				6B1B426EB44B33693D974D145A0E11D2 /* ApiNetworkingService.swift in Sources */,
 				5671AC68F21471191954E7D8060C876B /* BaseMacDataManager.swift in Sources */,
 				9E6FBBEE1EDDB44615493A45F8B7F6D9 /* iOSRealmConfig.swift in Sources */,
