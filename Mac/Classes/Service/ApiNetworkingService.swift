@@ -143,7 +143,7 @@ public class ApiNetworkingService {
         } else {
             MacConfigInstance?.macErrorNotifier.errorEncountered(error: error)
             
-            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, response: response, headers: response.response?.allHeaderFields) {
+            if let macConfigError = MacConfigInstance?.macProcessApiResponse.error(error: error, statusCode: responseCode, rawResponse: response, responseBody: response, headers: response.response?.allHeaderFields) {
                 observer(SingleEvent.error(macConfigError))
             } else {
                 observer(SingleEvent.error(APIError.apiCallFailure))
@@ -154,10 +154,10 @@ public class ApiNetworkingService {
     private class func determineErrorResponse(response: DataResponse<Any>, responseStatusCode: Int, parseError: @escaping (Any?) -> String) -> Single<Any?> {
         return Single<Any?>.create { observer in
             if responseStatusCode >= 200 && responseStatusCode < 300 {
-                MacConfigInstance?.macProcessApiResponse.success(response: response.value, headers: response.response!.allHeaderFields)
+                MacConfigInstance?.macProcessApiResponse.success(rawResponse: response, responseBody: response.value, headers: response.response!.allHeaderFields)
                 observer(SingleEvent.success(response.value))
             } else {
-                if let userProcessedError = MacConfigInstance?.macProcessApiResponse.error(error: nil, statusCode: responseStatusCode, response: response.value, headers: response.response!.allHeaderFields) {
+                if let userProcessedError = MacConfigInstance?.macProcessApiResponse.error(error: nil, statusCode: responseStatusCode, rawResponse: response, responseBody: response.value, headers: response.response!.allHeaderFields) {
                     observer(SingleEvent.error(userProcessedError))
                 } else {
                     switch responseStatusCode {

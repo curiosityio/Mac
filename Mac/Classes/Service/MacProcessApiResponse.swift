@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import Alamofire
 
 public protocol MacProcessApiResponse {
     
-    func success(response: Any?, headers: [AnyHashable : Any])
-    func error(error: Error?, statusCode: Int?, response: Any?, headers: [AnyHashable : Any]?) -> Error?
+    func success(rawResponse: DataResponse<Any>, responseBody: Any?, headers: [AnyHashable : Any])
+    func error(error: Error?, statusCode: Int?, rawResponse: DataResponse<Any>, responseBody: Any?, headers: [AnyHashable : Any]?) -> Error?
     
 }
