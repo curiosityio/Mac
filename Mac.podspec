@@ -40,7 +40,7 @@ iOS framework to build offline-first mobile apps. Create the models then have Ma
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'RxSwift', '~> 3.4.0'
   s.dependency 'RxRealm', '~> 0.6.0'
-  s.dependency 'RealmSwift', '~> 2.6.2'
+  s.dependency 'RealmSwift', '~> 2.10.2'
   s.dependency 'Alamofire', '~> 4.4.0'
   s.dependency 'iOSBoilerplate', '~> 0.3.0'
 end

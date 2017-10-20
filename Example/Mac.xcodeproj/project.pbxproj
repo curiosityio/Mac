@@ -13,6 +13,14 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		F75B28221F9A5EEC00587357 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B282E1F9A5EEC00587357 /* Alamofire.framework */; };
+		F75B28241F9A5EEC00587357 /* iOSBoilerplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28301F9A5EEC00587357 /* iOSBoilerplate.framework */; };
+		F75B28251F9A5EEC00587357 /* Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28311F9A5EEC00587357 /* Mac.framework */; };
+		F75B28281F9A5EEC00587357 /* Pods_Mac_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28341F9A5EEC00587357 /* Pods_Mac_Tests.framework */; };
+		F75B282A1F9A5EEC00587357 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28361F9A5EEC00587357 /* Realm.framework */; };
+		F75B282B1F9A5EEC00587357 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28371F9A5EEC00587357 /* RealmSwift.framework */; };
+		F75B282C1F9A5EEC00587357 /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28381F9A5EEC00587357 /* RxRealm.framework */; };
+		F75B282D1F9A5EEC00587357 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28391F9A5EEC00587357 /* RxSwift.framework */; };
 		FDB29541259723BF82962D28 /* Pods_Mac_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9354999EE58A892E28A8AA0 /* Pods_Mac_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +52,18 @@
 		ADEEBCA850620A4CCE61C027 /* Pods_Mac_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B980BBE545219E1B05FA15D1 /* Pods-Mac_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mac_Tests/Pods-Mac_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DE6DA77E10FBC51629332BC0 /* Pods-Mac_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mac_Tests/Pods-Mac_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		F75B282E1F9A5EEC00587357 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B282F1F9A5EEC00587357 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28301F9A5EEC00587357 /* iOSBoilerplate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSBoilerplate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28311F9A5EEC00587357 /* Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28321F9A5EEC00587357 /* Nimble_Snapshots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble_Snapshots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28331F9A5EEC00587357 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28341F9A5EEC00587357 /* Pods_Mac_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Mac_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28351F9A5EEC00587357 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28361F9A5EEC00587357 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28371F9A5EEC00587357 /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28381F9A5EEC00587357 /* RxRealm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxRealm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F75B28391F9A5EEC00587357 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +71,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F75B28221F9A5EEC00587357 /* Alamofire.framework in Frameworks */,
+				F75B28241F9A5EEC00587357 /* iOSBoilerplate.framework in Frameworks */,
+				F75B28251F9A5EEC00587357 /* Mac.framework in Frameworks */,
+				F75B28281F9A5EEC00587357 /* Pods_Mac_Tests.framework in Frameworks */,
+				F75B282A1F9A5EEC00587357 /* Realm.framework in Frameworks */,
+				F75B282B1F9A5EEC00587357 /* RealmSwift.framework in Frameworks */,
+				F75B282C1F9A5EEC00587357 /* RxRealm.framework in Frameworks */,
+				F75B282D1F9A5EEC00587357 /* RxSwift.framework in Frameworks */,
 				22ED642845AFC130B32A0707 /* Pods_Mac_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +97,18 @@
 		04F183AB40C36D296DD35F1E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F75B282E1F9A5EEC00587357 /* Alamofire.framework */,
+				F75B282F1F9A5EEC00587357 /* FBSnapshotTestCase.framework */,
+				F75B28301F9A5EEC00587357 /* iOSBoilerplate.framework */,
+				F75B28311F9A5EEC00587357 /* Mac.framework */,
+				F75B28321F9A5EEC00587357 /* Nimble_Snapshots.framework */,
+				F75B28331F9A5EEC00587357 /* Nimble.framework */,
+				F75B28341F9A5EEC00587357 /* Pods_Mac_Tests.framework */,
+				F75B28351F9A5EEC00587357 /* Quick.framework */,
+				F75B28361F9A5EEC00587357 /* Realm.framework */,
+				F75B28371F9A5EEC00587357 /* RealmSwift.framework */,
+				F75B28381F9A5EEC00587357 /* RxRealm.framework */,
+				F75B28391F9A5EEC00587357 /* RxSwift.framework */,
 				ADEEBCA850620A4CCE61C027 /* Pods_Mac_Example.framework */,
 				A9354999EE58A892E28A8AA0 /* Pods_Mac_Tests.framework */,
 			);
@@ -189,7 +229,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -251,13 +291,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mac_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BFE5674DAEB87C2B7619CE02 /* [CP] Copy Pods Resources */ = {
@@ -296,9 +339,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Mac_Tests/Pods-Mac_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble-Snapshots/Nimble_Snapshots.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble_Snapshots.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -311,9 +363,24 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Mac_Example/Pods-Mac_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Mac/Mac.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSBoilerplate/iOSBoilerplate.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSBoilerplate.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -326,13 +393,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mac_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -392,14 +462,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -439,14 +515,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
