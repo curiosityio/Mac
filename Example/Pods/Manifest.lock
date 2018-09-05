@@ -36,15 +36,28 @@ DEPENDENCIES:
   - Nimble-Snapshots
   - Quick (~> 1.2.0)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - FBSnapshotTestCase
+    - iOSBoilerplate
+    - Nimble
+    - Nimble-Snapshots
+    - Quick
+    - Realm
+    - RealmSwift
+    - RxRealm
+    - RxSwift
+
 EXTERNAL SOURCES:
   Mac:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   iOSBoilerplate: cb96a7c7e49a9b82adf885f6bf3a35565d1a2284
-  Mac: a4d46d340bfc5234445d825942ac476068116b9d
+  Mac: b66ee6636ca96458b06e74b79debafa550ca30fa
   Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
   Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
@@ -55,4 +68,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: abe7b560537a66aa544fae356f5280b49512e63e
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3

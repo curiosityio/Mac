@@ -95,7 +95,7 @@ internal class PendingApiTasksRunner: NSObject {
                     var nextAvailableApiTaskToRun: PendingApiTask?
                     PendingApiTasksManager.pendingApiTaskTypes.forEach({ (task) in
                         let getAllPendingApiTasksQuery = realm.objects(task as! Object.Type)
-                        var getAllPendingApiTasksQueryFilter = NSPredicate(format: "manuallyRunTask = %@", false as CVarArg)
+                        var getAllPendingApiTasksQueryFilter = NSPredicate(format: "manuallyRunTask = %@", NSNumber(booleanLiteral: false))
                         
                         if let lastFailedApiTaskCreatedAtTime = self.lastFailedApiTaskCreatedAtTime {
                             getAllPendingApiTasksQueryFilter = NSCompoundPredicate(andPredicateWithSubpredicates: [getAllPendingApiTasksQueryFilter, NSPredicate(format: "createdAt > %@", lastFailedApiTaskCreatedAtTime as CVarArg)])

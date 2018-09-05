@@ -13,6 +13,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		BE58C60270E1803DC7390B0E /* Pods_Mac_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28341F9A5EEC00587357 /* Pods_Mac_Tests.framework */; };
 		F75B28221F9A5EEC00587357 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B282E1F9A5EEC00587357 /* Alamofire.framework */; };
 		F75B28241F9A5EEC00587357 /* iOSBoilerplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28301F9A5EEC00587357 /* iOSBoilerplate.framework */; };
 		F75B28251F9A5EEC00587357 /* Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75B28311F9A5EEC00587357 /* Mac.framework */; };
@@ -88,6 +89,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDB29541259723BF82962D28 /* Pods_Mac_Tests.framework in Frameworks */,
+				BE58C60270E1803DC7390B0E /* Pods_Mac_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +192,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				EBE64F6CA7ADAA668B1BB1CA /* [CP] Embed Pods Frameworks */,
-				CEACADBDB8A18871720809C9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -210,7 +211,6 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				D54CB867CEF29C4E634E9787 /* [CP] Embed Pods Frameworks */,
-				BFE5674DAEB87C2B7619CE02 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -301,36 +301,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BFE5674DAEB87C2B7619CE02 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mac_Tests/Pods-Mac_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CEACADBDB8A18871720809C9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mac_Example/Pods-Mac_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D54CB867CEF29C4E634E9787 /* [CP] Embed Pods Frameworks */ = {
